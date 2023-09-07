@@ -1,4 +1,4 @@
-package com.hgf.printer;
+package com.hgf.printer.printer;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -15,11 +15,6 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
-//        Scene scene = new Scene(jfxDialog, 320, 240);
-//        stage.setTitle("Hello!");
-//        stage.setScene(scene);
-//        stage.show();
 
 
         Panel panel = new Panel("This is the title");
@@ -45,6 +40,18 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
-//        launch();
+        launch();
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        System.out.println("init");
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.out.println("stop");
     }
 }
