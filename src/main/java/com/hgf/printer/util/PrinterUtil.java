@@ -1,7 +1,6 @@
-package com.hgf.printer;
+package com.hgf.printer.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 
 import javax.print.DocFlavor;
 import javax.print.PrintService;
@@ -11,10 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class PdfBoxTest {
-
-    @Test
-    public void testListPrinter() {
+public class PrinterUtil {
+    public static List<String> listPrinterNames(){
         List<String> list = new ArrayList<>();
         HashPrintRequestAttributeSet requestAttributeSet = new HashPrintRequestAttributeSet();
         DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
@@ -30,5 +27,6 @@ public class PdfBoxTest {
                 System.out.println(print.getName());
             }
         }
+        return list;
     }
 }

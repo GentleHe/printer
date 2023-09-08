@@ -1,6 +1,12 @@
-module com.hgf.printer {
+module printer {
+    requires java.se;
+    requires javafx.base;
     requires javafx.controls;
-
     requires org.kordamp.bootstrapfx.core;
-    exports com.hgf.printer.printer;
+    
+    requires lombok;
+
+    requires slf4j.api;
+    
+    exports com.hgf.printer;
 }
