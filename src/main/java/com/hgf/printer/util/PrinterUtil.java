@@ -2,10 +2,12 @@ package com.hgf.printer.util;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.imageio.IIOException;
 import javax.print.DocFlavor;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import java.awt.color.CMMException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,5 +30,22 @@ public class PrinterUtil {
             }
         }
         return list;
+    }
+
+    public static void print(String printerName, String text){
+        PrintServiceLookup.lookupDefaultPrintService();
+        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
+        printServiceLookupProvider.getPrintServiceByName(printerName);
+//        PrintService printService = new Win32Prin;
+//        DocPrintJob printJob = printService.createPrintJob();
+//        printJob.print();
+
+    }
+
+    public static void main(String[] args) {
+        PrinterJobWrapper
+        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
+        PrintService fax = printServiceLookupProvider.getPrintServiceByName("Fax");
+        System.out.println(fax.getName());
     }
 }
