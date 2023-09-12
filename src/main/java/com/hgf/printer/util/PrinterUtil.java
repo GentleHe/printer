@@ -3,9 +3,9 @@ package com.hgf.printer.util;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.IIOException;
-import javax.print.DocFlavor;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
+import javax.print.*;
+import javax.print.attribute.DocAttributeSet;
+import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import java.awt.color.CMMException;
 import java.util.ArrayList;
@@ -34,18 +34,34 @@ public class PrinterUtil {
 
     public static void print(String printerName, String text){
         PrintServiceLookup.lookupDefaultPrintService();
-        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
-        printServiceLookupProvider.getPrintServiceByName(printerName);
+
+//        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
+//        printServiceLookupProvider.getPrintServiceByName(printerName);
 //        PrintService printService = new Win32Prin;
 //        DocPrintJob printJob = printService.createPrintJob();
 //        printJob.print();
 
     }
 
-    public static void main(String[] args) {
-        PrinterJobWrapper
-        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
-        PrintService fax = printServiceLookupProvider.getPrintServiceByName("Fax");
-        System.out.println(fax.getName());
+    public static void main(String[] args) throws PrintException {
+        HashPrintRequestAttributeSet requestAttributeSet = new HashPrintRequestAttributeSet();
+        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+        //查找所有的可用的打印服务
+        PrintService[] printServices = PrintServiceLookup.lookupPrintServices(flavor, requestAttributeSet);
+
+        PrintService toPdfService = null;
+        for (PrintService printService : printServices) {
+            if (printService.getName().equals("Microsoft Print to PDF")) {
+                toPdfService = printService;
+            }
+        }
+        System.out.println("hehe");
+
+//        Microsoft Print to PDF
+        DocPrintJob printJob = toPdfService.createPrintJob();
+        HashDocAttributeSet hashDocAttributeSet = new HashDocAttributeSet();
+        Doc doc = new SimpleDoc("123", flavor, hashDocAttributeSet);
+
+        printJob.print(doc, new HashPrintRequestAttributeSet());
     }
 }

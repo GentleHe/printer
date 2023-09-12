@@ -6,9 +6,13 @@ module printer {
     requires jakarta.jms.api;
     requires activemq.client;
     requires lombok;
-//    requires transitive java.desktop;
+    requires transitive java.desktop;
 
     requires slf4j.api;
 
+    uses javax.print.PrintServiceLookup;
+
+
     exports com.hgf.printer;
+    exports com.hgf.printer.util;
 }
