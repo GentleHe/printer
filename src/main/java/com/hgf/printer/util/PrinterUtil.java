@@ -7,13 +7,17 @@ import javax.print.*;
 import javax.print.attribute.DocAttributeSet;
 import javax.print.attribute.HashDocAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.standard.Copies;
 import java.awt.color.CMMException;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class PrinterUtil {
-    public static List<String> listPrinterNames(){
+    public static List<String> listPrinterNames() {
         List<String> list = new ArrayList<>();
         HashPrintRequestAttributeSet requestAttributeSet = new HashPrintRequestAttributeSet();
         DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
@@ -32,7 +36,7 @@ public class PrinterUtil {
         return list;
     }
 
-    public static void print(String printerName, String text){
+    public static void print(String printerName, String text) {
         PrintServiceLookup.lookupDefaultPrintService();
 
 //        PrintServiceLookupProvider printServiceLookupProvider = new PrintServiceLookupProvider();
@@ -43,9 +47,10 @@ public class PrinterUtil {
 
     }
 
-    public static void main(String[] args) throws PrintException {
+    public static void main(String[] args) throws PrintException, IOException {
         HashPrintRequestAttributeSet requestAttributeSet = new HashPrintRequestAttributeSet();
-        DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
+
+        DocFlavor flavor = DocFlavor.INPUT_STREAM.GIF;
         //查找所有的可用的打印服务
         PrintService[] printServices = PrintServiceLookup.lookupPrintServices(flavor, requestAttributeSet);
 
@@ -60,8 +65,13 @@ public class PrinterUtil {
 //        Microsoft Print to PDF
         DocPrintJob printJob = toPdfService.createPrintJob();
         HashDocAttributeSet hashDocAttributeSet = new HashDocAttributeSet();
-        Doc doc = new SimpleDoc("123", flavor, hashDocAttributeSet);
+//        FileInputStream fis = new FileInputStream("D://a.txt");
+        FileInputStream fis = new FileInputStream("D://aa.pdf");
+        Doc doc = new SimpleDoc(fis, DocFlavor.INPUT_STREAM.PDF, null);
+        fis.close();
+        requestAttributeSet.add(new Copies(1));
 
-        printJob.print(doc, new HashPrintRequestAttributeSet());
+        printJob.print(doc, requestAttributeSet);
+
     }
 }
